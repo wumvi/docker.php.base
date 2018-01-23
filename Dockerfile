@@ -21,7 +21,7 @@ RUN DEBIAN_FRONTEND=noninteractive && \
     apt-get --no-install-recommends -qq -y install php${PHP_VERSION}-cli \
         php${PHP_VERSION}-curl php${PHP_VERSION}-dev php${PHP_VERSION}-sqlite3 php${PHP_VERSION}-xml \
         php${PHP_VERSION}-zip php${PHP_VERSION}-soap php${PHP_VERSION}-memcached php${PHP_VERSION}-mbstring \
-        php${PHP_VERSION}-pgsql php${PHP_VERSION}-zip && \
+        php${PHP_VERSION}-pgsql && \
     mkdir /soft/ && \
     #
     cd /soft/ && \
