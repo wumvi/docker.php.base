@@ -1,6 +1,8 @@
 FROM debian:stretch-slim
 MAINTAINER Vitaliy Kozlenko <vk@wumvi.com>
 
+ENV PHP_VERSION 7.2
+
 RUN DEBIAN_FRONTEND=noninteractive && \
     rm /etc/apt/sources.list && \
     echo "deb http://mirror.yandex.ru/debian stretch main contrib non-free" >> /etc/apt/sources.list && \
@@ -15,8 +17,13 @@ RUN DEBIAN_FRONTEND=noninteractive && \
 	echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list && \
 	echo "deb-src https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list && \
     apt-get update && \
-    apt-get --no-install-recommends -qq -y install php7.2-cli php7.2-curl php7.2-dev php7.2-sqlite3 php7.2-xml php7.2-zip php7.2-soap php7.2-memcached php7.2-mbstring php7.2-pgsql php7.2-zip && \
+    #
+    apt-get --no-install-recommends -qq -y install php${PHP_VERSION}-cli \
+        php${PHP_VERSION}-curl php${PHP_VERSION}-dev php${PHP_VERSION}-sqlite3 php${PHP_VERSION}-xml \
+        php${PHP_VERSION}-zip php${PHP_VERSION}-soap php${PHP_VERSION}-memcached php${PHP_VERSION}-mbstring \
+        php${PHP_VERSION}-pgsql php${PHP_VERSION}-zip && \
     mkdir /soft/ && \
+    #
     cd /soft/ && \
     git clone https://github.com/igbinary/igbinary.git igbinary && \
     cd igbinary && \
@@ -24,9 +31,10 @@ RUN DEBIAN_FRONTEND=noninteractive && \
     ./configure && \
     make && \
     make install && \
+    #
     cd / && \
 	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-	apt-get -y remove libboost-all-dev git cmake ssh build-essential php7.2-dev && \
+	apt-get -y remove libboost-all-dev git cmake ssh build-essential php${PHP_VERSION}-dev && \
     apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* && \
 	echo 'end'
