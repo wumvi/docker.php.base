@@ -1,7 +1,7 @@
 FROM debian:stretch-slim
 MAINTAINER Vitaliy Kozlenko <vk@wumvi.com>
 
-ENV PHP_VERSION 7.2
+ENV PHP_VERSION 7.1
 
 RUN DEBIAN_FRONTEND=noninteractive && \
     rm /etc/apt/sources.list && \
