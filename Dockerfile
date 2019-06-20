@@ -1,6 +1,6 @@
 FROM php:7.3.6-fpm-alpine3.9
 
-ENV TZ=Europe/Moscow APP_ENV=prod
+ENV TZ=Europe/Moscow
 
 COPY php-ext.ini /usr/local/etc/php/conf.d/php-ext.ini
 COPY docker.conf /usr/local/etc/php-fpm.d/docker.conf
@@ -10,7 +10,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
     && apk add --no-cache --virtual .build-deps postgresql-dev git zlib-dev libmemcached-dev autoconf \
     && apk add libmemcached \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && docker-php-ext-install opcache pcntl pgsql mbstrig \
     #
     && git clone -b php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
@@ -19,6 +18,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && docker-php-ext-install /usr/src/php/ext/memcached \
     && docker-php-ext-enable memcached \
     && rm -rf /usr/src/php/ext/memcached \
+    #
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     #
     && docker-php-source delete \
     && chmod a+x /run.sh \
