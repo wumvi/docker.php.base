@@ -13,6 +13,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && docker-php-ext-install opcache pcntl pgsql mbstring \
     #
     && git clone -b php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
+    && cd /usr/src/php/ext/memcached \
     && git checkout v3.1.3 \
     && docker-php-ext-configure /usr/src/php/ext/memcached --disable-memcached-sasl \
     && docker-php-ext-install /usr/src/php/ext/memcached \
