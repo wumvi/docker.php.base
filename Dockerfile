@@ -10,7 +10,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
     && apk add --no-cache --virtual .build-deps postgresql-dev git zlib-dev libmemcached-dev autoconf \
     && apk add libmemcached \
-    && docker-php-ext-install opcache pcntl pgsql mbstrig \
+    && docker-php-ext-install opcache pcntl pgsql mbstring \
     #
     && git clone -b php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
     && git checkout v3.1.3 \
